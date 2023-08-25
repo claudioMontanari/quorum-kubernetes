@@ -5,7 +5,11 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+{{- if .Values.storage.storageClassName }}
+  name: {{ .Values.storage.storageClassName }}
+{{- else }}
   name: {{ include "goquorum-node.fullname" . }}-storage
+{{- end }}
   namespace: {{ .Release.Namespace }}
 provisioner: kubernetes.io/azure-file
 reclaimPolicy: "{{.Values.storage.reclaimPolicy }}"
@@ -25,7 +29,11 @@ parameters:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
+{{- if .Values.storage.storageClassName }}
+  name: {{ .Values.storage.storageClassName }}
+{{- else }}
   name: {{ include "goquorum-node.fullname" . }}-storage
+{{- end }}
   namespace: {{ .Release.Namespace }}
 provisioner: {{ .Values.storage.aws.provisioner }}
 reclaimPolicy: "{{.Values.storage.reclaimPolicy }}"
